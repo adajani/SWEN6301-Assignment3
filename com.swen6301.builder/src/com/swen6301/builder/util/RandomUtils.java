@@ -78,5 +78,4 @@ public class RandomUtils {
 		String[] possibleSexValues = {null, "none", "male", "female"};
 		return possibleSexValues[RANDOM.nextInt(possibleSexValues.length)];
 	}
-	
 }

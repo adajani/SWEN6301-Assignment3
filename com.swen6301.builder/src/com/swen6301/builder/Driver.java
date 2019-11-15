@@ -1,15 +1,13 @@
 package com.swen6301.builder;
 
-import com.swen6301.builder.util.PersistenceUtils;
 import com.swen6301.builder.util.RandomUtils;
+import com.swen6301.builder.patient.Patient;
 
 /**
  * A dummy driver class that simulates a driver class for this project.
  */
 public class Driver {
-	
 	public static void main(String[] args) {
-		
 		// Create 1000 random samples.
 		for(int i = 0; i < 1000; i++) {
 			System.out.println("****************");
@@ -31,12 +29,23 @@ public class Driver {
 		int height = RandomUtils.randomNumber(300);
 		boolean organDonor = RandomUtils.randomBoolean();
 		String bloodType = RandomUtils.randomBloodType();
-		boolean success = PersistenceUtils.storePatientInfo(firstName, middleName, lastName, age, weight, sex, height, organDonor, bloodType);
-		if(success) {
-			System.out.println("Patient [" + firstName + ", " + lastName + "] has been successfully processed!");
-		} else {
+
+		try {
+			Patient patient = new Patient.PatientBuilder()
+							.addFirstName(firstName)
+							.addMiddleName(middleName)
+							.addLastName(lastName)
+							.addAge(age)
+							.addWeight(weight)
+							.addSex(sex)
+							.addHeight(height)
+							.addOrganDonor(organDonor)
+							.addBloodType(bloodType)
+							.build();
+			System.out.println(patient.toString() + " has been successfully processed!");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
 			System.out.println("An error occurred while processing info for patient [" + firstName + ", " + lastName + "]!");
 		}
 	}
-	
 }
